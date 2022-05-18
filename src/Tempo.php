@@ -71,22 +71,8 @@ class Tempo
         $this->callerSpanId = $value;
     }
 
-    public function disableSend(): void
-    {
-        $this->doSend = false;
-    }
-
-    public function enableSend(): void
-    {
-        $this->doSend = true;
-    }
-
     public function send()
     {
-        if (false === $this->doSend) {
-            return;
-        }
-
         $alls = [];
 
         try {
@@ -100,5 +86,10 @@ class Tempo
         } catch (\Exception $ex) {
             $this->logger->warning($ex->getMessage());
         }
+    }
+
+    public function purgeTraces(): void
+    {
+        $this->traces = [];
     }
 }
